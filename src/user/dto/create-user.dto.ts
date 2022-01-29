@@ -1,11 +1,4 @@
-import {
-  IsAlpha,
-  IsBoolean,
-  IsEmail,
-  IsNotEmpty,
-  Length,
-  Matches,
-} from 'class-validator';
+import { IsAlpha, IsEmail, IsNotEmpty, Length, Matches } from 'class-validator';
 
 export class CreateUserDto {
   @IsAlpha()
@@ -21,23 +14,21 @@ export class CreateUserDto {
   })
   email: string;
 
-  @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
-    message: 'Senha pouco segura',
-  })
-  @Length(8, 20, { message: 'A senha deve conter de 8 a 20 dígitos' })
+  // @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
+  //   message: 'Senha pouco segura',
+  // })
+  @Length(6, 20, { message: 'A senha deve conter de 6 a 20 dígitos' })
   pass: string;
 
-  @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
-    message: 'Senha pouco segura',
-  })
-  @Length(8, 20, {
+  // @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
+  //   message: 'Senha pouco segura',
+  // })
+  @Length(6, 20, {
     message: 'A confirmação da senha deve conter de 8 a 20 dígitos',
   })
   passConfirm: string;
 
-  @IsBoolean()
   admin: boolean;
 
-  @IsBoolean()
   active: boolean;
 }

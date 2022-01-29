@@ -15,8 +15,8 @@ model User {
   name      String
   email     String   @unique
   pass      String
-  admin     Boolean  @default(false)
-  active    Boolean  @default(true)
+  admin     Boolean
+  active    Boolean
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -28,7 +28,7 @@ model Product {
   collection  String
   griffe      String
   stock       Boolean
-  active      Boolean  @default(true)
+  active      Boolean
   price       Float
   discount    Int
   finalPrice  Float
