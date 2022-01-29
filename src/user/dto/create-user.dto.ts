@@ -11,7 +11,7 @@ export class CreateUserDto {
   @IsAlpha('pt-br', { message: 'O nome deve conter apenas letras' })
   @IsNotEmpty({ message: 'Por favor insira um nome' })
   @Length(3, 150)
-  nome: string;
+  name: string;
 
   @IsNotEmpty({
     message: 'O e-mail da empresa é obrigatório para fazer cadastro no sistema',
@@ -25,7 +25,7 @@ export class CreateUserDto {
     message: 'Senha pouco segura',
   })
   @Length(8, 20, { message: 'A senha deve conter de 8 a 20 dígitos' })
-  senha: string;
+  pass: string;
 
   @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
     message: 'Senha pouco segura',
@@ -33,11 +33,11 @@ export class CreateUserDto {
   @Length(8, 20, {
     message: 'A confirmação da senha deve conter de 8 a 20 dígitos',
   })
-  confirmacaoSenha: string;
+  passConfirm: string;
 
   @IsBoolean()
-  administrador: boolean;
+  admin: boolean;
 
   @IsBoolean()
-  ativo: boolean;
+  active: boolean;
 }
