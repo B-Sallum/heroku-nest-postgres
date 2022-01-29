@@ -9,3 +9,39 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  ID_USUARIO    Int      @id @default(autoincrement())
+  NOME          String
+  EMAIL         String   @unique
+  SENHA         String
+  ADMINISTRADOR Boolean  @default(false)
+  ATIVO         Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Product {
+  ID_PRODUTO  Int      @unique
+  NOME        String
+  DESCRICAO   String
+  COLECAO     String
+  GRIFFE      String
+  ESTOQUE     Boolean
+  ATIVO       Boolean  @default(true)
+  PRECO       Float
+  DESCONTO    Int
+  PRECO_FINAL Float
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Log {
+  LOG_ID         Int      @id @default(autoincrement())
+  ID_USUARIO     Int
+  ID_PRODUTO     String
+  CAMPO_ALTERADO String
+  VALOR_ORIGINAL Float
+  VALOR_NOVO     Float
+  createdAt      DateTime @default(now())
+}

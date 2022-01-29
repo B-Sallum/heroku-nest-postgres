@@ -1,8 +1,10 @@
 import { Module } from '@nestjs/common';
-import { OpenRoutesModule } from './open-routes/open-routes.module';
+import { PrismaModule } from './prisma/prisma.module';
+import { UserModule } from './user/user.module';
+import { ProductModule } from './product/product.module';
 
 @Module({
-  imports: [OpenRoutesModule],
+  imports: [PrismaModule, UserModule, ProductModule],
   controllers: [],
   providers: [],
 })
