@@ -14,17 +14,17 @@ export class UserController {
   }
 
   @Get()
-  findAll() {
+  findAll(): Promise<User[]> {
     return this.service.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.service.findOne(id);
+  findOne(@Param('id') id: number): Promise<any> {
+    return this.service.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() data: UpdateUserDto) {
-    return this.service.update(id, data);
+  update(@Param('id') id: number, @Body() data: UpdateUserDto): Promise<User> {
+    return this.service.update(+id, data);
   }
 }

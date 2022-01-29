@@ -2,6 +2,7 @@ import { PrismaService } from '../prisma.service';
 import {
   ConflictException,
   Injectable,
+  NotFoundException,
   // NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -45,19 +46,42 @@ export class UserService {
     return user;
   }
 
-  findAll() {
-    return `This action returns all user`;
+  async findAll(): Promise<User[]> {
+    const usersList = await this.database.user.findMany();
+
+    return usersList;
   }
 
-  findOne(id: string) {
-    return `This action returns a #${id} user`;
+  async findOne(id: number): Promise<any> {
+    const user = await this.database.user.findUnique({
+      where: { id },
+    });
+
+    const logs = await this.database.log.findMany({
+      where: {
+        user_id: id,
+      },
+    });
+
+    return [user, logs];
   }
 
-  update(id: string, data: UpdateUserDto) {
-    return `This action updates a #${id} user with this data ${data}`;
-  }
+  async update(id: number, data: UpdateUserDto): Promise<User> {
+    const checkUser = await this.database.user.findUnique({
+      where: { id },
+    });
 
-  inactive(id: string) {
-    return `This inactive a ${id} user`;
+    if (!checkUser) {
+      throw new NotFoundException(
+        'Ocorreu um erro no sistema, favor entrar em contato com o suporte.',
+      );
+    }
+
+    const updatedUser = await this.database.user.update({
+      where: { id },
+      data: data,
+    });
+
+    return updatedUser;
   }
 }
