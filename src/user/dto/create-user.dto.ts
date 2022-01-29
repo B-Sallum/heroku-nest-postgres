@@ -8,7 +8,7 @@ import {
 } from 'class-validator';
 
 export class CreateUserDto {
-  @IsAlpha('pt-br', { message: 'O nome deve conter apenas letras' })
+  @IsAlpha()
   @IsNotEmpty({ message: 'Por favor insira um nome' })
   @Length(3, 150)
   name: string;
