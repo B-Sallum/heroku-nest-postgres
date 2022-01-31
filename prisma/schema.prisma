@@ -22,7 +22,7 @@ model User {
 }
 
 model Product {
-  id          Int      @unique
+  code        String   @unique
   name        String
   description String
   collection  String

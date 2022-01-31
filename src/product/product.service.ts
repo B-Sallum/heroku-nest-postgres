@@ -1,23 +1,52 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { Product } from '@prisma/client';
+import { PrismaService } from 'src/prisma.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 
 @Injectable()
 export class ProductService {
-  create(data: CreateProductDto) {
-    return 'This action adds a new product';
+  constructor(private database: PrismaService) {}
+
+  async create(data: CreateProductDto): Promise<Product> {
+    const product = await this.database.product.create({ data });
+
+    return product;
   }
 
-  findAll() {
-    return `This action returns all product`;
+  async findAll(): Promise<Product[]> {
+    const products = await this.database.product.findMany();
+
+    return products;
   }
 
-  findOne(id: string) {
-    return `This action returns a #${id} product`;
+  async findOne(code: string): Promise<Product> {
+    const product = await this.database.product.findUnique({
+      where: { code },
+    });
+
+    if (!product) {
+      throw new NotFoundException('Sorry, product not found under this ID');
+    }
+
+    return product;
   }
 
-  update(id: string, data: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+  async update(code: string, data: UpdateProductDto): Promise<Product> {
+    const checkProduct = await this.database.product.findUnique({
+      where: { code },
+    });
+
+    if (!checkProduct) {
+      throw new NotFoundException('Product not found');
+    }
+
+    const product = await this.database.product.update({
+      where: { code },
+      data,
+    });
+
+    return product;
   }
 
   inactive(id: string) {

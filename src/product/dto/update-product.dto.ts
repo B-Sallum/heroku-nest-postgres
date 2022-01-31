@@ -2,29 +2,32 @@ import { IsOptional } from 'class-validator';
 
 export class UpdateProductDto {
   @IsOptional()
-  nome: string;
+  code: string;
 
   @IsOptional()
-  descricao: string;
+  name: string;
 
   @IsOptional()
-  colecao: string;
+  description: string;
 
   @IsOptional()
-  griffe: string;
+  collection: string;
 
   @IsOptional()
-  estoque: boolean;
+  griffe: boolean;
 
   @IsOptional()
-  ativo: boolean;
+  stock: boolean;
 
   @IsOptional()
-  preco: number;
+  active: number;
 
   @IsOptional()
-  desconto: number;
+  price: number;
 
   @IsOptional()
-  precofinal: number;
+  discount: number;
+
+  @IsOptional()
+  finalPrice: number;
 }

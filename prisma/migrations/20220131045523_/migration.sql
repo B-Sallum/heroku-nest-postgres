@@ -14,7 +14,7 @@ CREATE TABLE "User" (
 
 -- CreateTable
 CREATE TABLE "Product" (
-    "id" INTEGER NOT NULL,
+    "code" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "collection" TEXT NOT NULL,
@@ -45,4 +45,4 @@ CREATE TABLE "Log" (
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Product_id_key" ON "Product"("id");
+CREATE UNIQUE INDEX "Product_code_key" ON "Product"("code");
