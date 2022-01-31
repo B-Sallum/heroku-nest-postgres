@@ -14,13 +14,13 @@ export class UpdateProductDto {
   collection: string;
 
   @IsOptional()
-  griffe: boolean;
+  griffe: string;
 
   @IsOptional()
   stock: boolean;
 
   @IsOptional()
-  active: number;
+  active: boolean;
 
   @IsOptional()
   price: number;

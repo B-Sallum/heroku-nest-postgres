@@ -43,13 +43,9 @@ export class ProductService {
 
     const product = await this.database.product.update({
       where: { code },
-      data,
+      data: data,
     });
 
     return product;
-  }
-
-  inactive(id: string) {
-    return `This action removes a #${id} product`;
   }
 }
