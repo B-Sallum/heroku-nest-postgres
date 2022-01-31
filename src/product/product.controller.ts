@@ -4,7 +4,7 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Product } from '@prisma/client';
 
-@Controller('product')
+@Controller('products')
 export class ProductController {
   constructor(private readonly service: ProductService) {}
 
