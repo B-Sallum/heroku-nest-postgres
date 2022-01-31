@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreateProductDto {
   @IsString()
@@ -28,7 +28,9 @@ export class CreateProductDto {
   @IsNotEmpty({ message: 'Insira o valor original' })
   price: number;
 
+  @IsOptional()
   discount: number;
 
+  @IsOptional()
   finalPrice: number;
 }

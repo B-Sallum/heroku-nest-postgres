@@ -36,7 +36,7 @@ export class UserService {
       data: {
         ...data,
         pass: hashPass,
-        admin: false,
+        admin: true,
         active: true,
       },
     });
