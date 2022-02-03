@@ -45,10 +45,12 @@ export class UserService {
     return user;
   }
 
-  async findAll(): Promise<User[]> {
+  async findAll(): Promise<any[]> {
     const usersList = await this.database.user.findMany();
 
-    return usersList;
+    const users = usersList.map(({ pass, ...rest }) => rest);
+
+    return users;
   }
 
   async findOne(id: number): Promise<any> {
