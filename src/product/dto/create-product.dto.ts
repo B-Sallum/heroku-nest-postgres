@@ -33,15 +33,15 @@ export class CreateProductDto {
   @ApiProperty()
   active: boolean;
 
-  @ApiProperty()
   @IsNotEmpty({ message: 'Insira o valor original' })
+  @ApiProperty()
   price: number;
 
-  @ApiProperty()
   @IsOptional()
+  @ApiProperty()
   discount: number;
 
-  @ApiProperty()
   @IsOptional()
+  @ApiProperty()
   finalPrice: number;
 }

@@ -20,7 +20,7 @@ export class ProductController {
   constructor(private readonly service: ProductService) {}
 
   @UseGuards(AuthGuard())
-  @Post('/create')
+  @Post()
   @ApiOperation({
     summary: 'Cadastrar um produto',
   })
@@ -29,7 +29,7 @@ export class ProductController {
   }
 
   @UseGuards(AuthGuard())
-  @Get('/findAll')
+  @Get()
   @ApiOperation({
     summary: 'Pegar todos os produtos cadastrados',
   })
@@ -38,20 +38,20 @@ export class ProductController {
   }
 
   @UseGuards(AuthGuard())
-  @Get('find/:code')
+  @Get('/:code')
   @ApiOperation({
     summary: 'Pegar por código do produto',
   })
-  findOne(@Param('id') code: string): Promise<Product> {
+  findOne(@Param('code') code: string): Promise<Product> {
     return this.service.findOne(code);
   }
 
   @UseGuards(AuthGuard())
-  @Patch(':id')
+  @Patch('/:code')
   @ApiOperation({
     summary: 'Atualizar os produtos',
   })
-  update(@Param('id') code: string, @Body() data: UpdateProductDto) {
+  update(@Param('code') code: string, @Body() data: UpdateProductDto) {
     return this.service.update(code, data);
   }
 }
