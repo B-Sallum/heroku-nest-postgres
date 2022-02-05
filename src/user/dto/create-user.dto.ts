@@ -32,10 +32,4 @@ export class CreateUserDto {
   })
   @ApiProperty()
   passConfirm: string;
-
-  @ApiProperty()
-  admin: boolean;
-
-  @ApiProperty()
-  active: boolean;
 }
