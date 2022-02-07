@@ -22,7 +22,7 @@ export class UserController {
   @UseGuards(AuthGuard())
   @Post()
   @ApiOperation({
-    summary: 'Cadastrar um usuario',
+    summary: 'Cadastrar um usuário',
   })
   create(@Body() data: CreateUserDto): Promise<User> {
     return this.service.create(data);
@@ -31,7 +31,7 @@ export class UserController {
   @UseGuards(AuthGuard())
   @Get()
   @ApiOperation({
-    summary: 'Pegar todos os usuários',
+    summary: 'Buscar todos os usuários',
   })
   findAll(): Promise<User[]> {
     return this.service.findAll();
