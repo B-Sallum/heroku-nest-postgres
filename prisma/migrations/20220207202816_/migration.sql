@@ -29,7 +29,7 @@ CREATE TABLE "Product" (
 );
 
 -- CreateTable
-CREATE TABLE "Log" (
+CREATE TABLE "ModLog" (
     "id" SERIAL NOT NULL,
     "user_id" INTEGER NOT NULL,
     "product_id" TEXT NOT NULL,
@@ -38,7 +38,7 @@ CREATE TABLE "Log" (
     "new" DOUBLE PRECISION NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT "Log_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "ModLog_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
