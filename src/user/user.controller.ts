@@ -31,7 +31,7 @@ export class UserController {
   @UseGuards(AuthGuard())
   @Get()
   @ApiOperation({
-    summary: 'Pegar todos os usuarios',
+    summary: 'Pegar todos os usuários',
   })
   findAll(): Promise<User[]> {
     return this.service.findAll();

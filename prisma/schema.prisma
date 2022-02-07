@@ -36,7 +36,7 @@ model Product {
   updatedAt   DateTime @updatedAt
 }
 
-model Log {
+model ModLog {
   id          Int      @id @default(autoincrement())
   user_id     Int
   product_id  String

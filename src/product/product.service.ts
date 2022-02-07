@@ -3,7 +3,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { Product } from '@prisma/client';
+import { Product, User } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -44,7 +44,11 @@ export class ProductService {
     return product;
   }
 
-  async update(code: string, data: UpdateProductDto): Promise<Product> {
+  async update(
+    user: User,
+    code: string,
+    data: UpdateProductDto,
+  ): Promise<Product> {
     await this.findOne(code);
 
     const product = await this.database.product.update({

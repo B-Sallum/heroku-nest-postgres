@@ -16,7 +16,7 @@ export class UserService {
 
   async create(data: CreateUserDto): Promise<User> {
     if (data.pass !== data.passConfirm) {
-      throw new UnauthorizedException("Passwords don't match");
+      throw new UnauthorizedException('Senhas não conferem');
     } else {
       delete data.passConfirm;
     }
@@ -26,7 +26,7 @@ export class UserService {
     });
 
     if (checkUser) {
-      throw new ConflictException('Email already in use');
+      throw new ConflictException('E-mail já cadastrado');
     }
 
     const salt = 10;
@@ -66,6 +66,8 @@ export class UserService {
       },
     });
 
+    delete user.pass;
+
     return [user, logs];
   }
 
@@ -84,6 +86,8 @@ export class UserService {
       where: { id },
       data: data,
     });
+
+    delete updatedUser.pass;
 
     return updatedUser;
   }
