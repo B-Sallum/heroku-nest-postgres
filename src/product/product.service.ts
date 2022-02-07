@@ -38,7 +38,7 @@ export class ProductService {
     });
 
     if (!product) {
-      throw new NotFoundException('Produto não encontrado');
+      throw new NotFoundException('Produto não encontrado com este código');
     }
 
     return product;
@@ -49,12 +49,48 @@ export class ProductService {
     code: string,
     data: UpdateProductDto,
   ): Promise<Product> {
-    await this.findOne(code);
+    const oldProduct = await this.findOne(code);
 
     const product = await this.database.product.update({
       where: { code },
       data: data,
     });
+
+    if (oldProduct.price !== product.price) {
+      await this.database.modLog.create({
+        data: {
+          user_id: user.id,
+          product_id: code,
+          alter_field: 'Valor original',
+          original: oldProduct.price,
+          new: product.price,
+        },
+      });
+    }
+
+    if (oldProduct.discount !== product.discount) {
+      await this.database.modLog.create({
+        data: {
+          user_id: user.id,
+          product_id: code,
+          alter_field: 'Desconto',
+          original: oldProduct.discount,
+          new: product.discount,
+        },
+      });
+    }
+
+    if (oldProduct.finalPrice !== product.finalPrice) {
+      await this.database.modLog.create({
+        data: {
+          user_id: user.id,
+          product_id: code,
+          alter_field: 'Preço final',
+          original: oldProduct.finalPrice,
+          new: product.finalPrice,
+        },
+      });
+    }
 
     return product;
   }
