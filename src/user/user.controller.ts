@@ -19,6 +19,7 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 export class UserController {
   constructor(private readonly service: UserService) {}
 
+  @UseGuards(AuthGuard())
   @Post()
   @ApiOperation({
     summary: 'Cadastrar um usuário',
