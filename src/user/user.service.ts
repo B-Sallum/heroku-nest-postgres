@@ -60,7 +60,7 @@ export class UserService {
       where: { id },
     });
 
-    const logs = await this.database.log.findMany({
+    const logs = await this.database.modLog.findMany({
       where: {
         user_id: id,
       },
