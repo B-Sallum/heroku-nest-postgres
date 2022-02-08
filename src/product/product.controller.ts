@@ -12,11 +12,11 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Product, User } from '@prisma/client';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth ,ApiOperation, ApiTags } from '@nestjs/swagger';
 import AuthUser from 'src/auth/auth-user.decorator';
 
 @ApiTags('Products')
-@Controller('products')
+@Controller('products') 
 export class ProductController {
   constructor(private readonly service: ProductService) {}
 
@@ -25,6 +25,7 @@ export class ProductController {
   @ApiOperation({
     summary: 'Cadastrar um produto',
   })
+  @ApiBearerAuth()
   create(@Body() data: CreateProductDto): Promise<Product> {
     return this.service.create(data);
   }
@@ -34,6 +35,7 @@ export class ProductController {
   @ApiOperation({
     summary: 'Buscar todos os produtos cadastrados',
   })
+  @ApiBearerAuth()
   findAll(): Promise<Product[]> {
     return this.service.findAll();
   }
@@ -43,6 +45,7 @@ export class ProductController {
   @ApiOperation({
     summary: 'Buscar um produto por código',
   })
+  @ApiBearerAuth()
   findOne(@Param('code') code: string): Promise<Product> {
     return this.service.findOne(code);
   }
@@ -52,6 +55,7 @@ export class ProductController {
   @ApiOperation({
     summary: 'Atualizar um produto',
   })
+  @ApiBearerAuth()
   update(
     @AuthUser() user: User,
     @Param('code') code: string,
