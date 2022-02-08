@@ -12,7 +12,7 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth ,ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Users')
 @Controller('user')
@@ -33,6 +33,7 @@ export class UserController {
   @ApiOperation({
     summary: 'Buscar todos os usuários',
   })
+  @ApiBearerAuth()
   findAll(): Promise<User[]> {
     return this.service.findAll();
   }
@@ -42,6 +43,7 @@ export class UserController {
   @ApiOperation({
     summary: 'Retornar um usuário com os logs',
   })
+  @ApiBearerAuth()
   findOne(@Param('id') id: number): Promise<any> {
     return this.service.findOne(+id);
   }
@@ -51,6 +53,7 @@ export class UserController {
   @ApiOperation({
     summary: 'Editar um usuário',
   })
+  @ApiBearerAuth()
   update(@Param('id') id: number, @Body() data: UpdateUserDto): Promise<User> {
     return this.service.update(+id, data);
   }
