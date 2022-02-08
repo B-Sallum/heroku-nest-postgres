@@ -12,11 +12,11 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Product, User } from '@prisma/client';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiBearerAuth ,ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import AuthUser from 'src/auth/auth-user.decorator';
 
 @ApiTags('Products')
-@Controller('products') 
+@Controller('products')
 export class ProductController {
   constructor(private readonly service: ProductService) {}
 
