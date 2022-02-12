@@ -6,7 +6,7 @@ import { UploadModule } from './upload/upload.module';
 import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
-  imports: [AuthModule, UserModule, ProductModule, UploadModule,],
+  imports: [AuthModule, UserModule, ProductModule, UploadModule, MulterModule],
   controllers: [],
   providers: [],
 })

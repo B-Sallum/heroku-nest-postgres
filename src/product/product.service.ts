@@ -21,6 +21,8 @@ export class ProductService {
       throw new ConflictException('Produto já cadastrado');
     }
 
+    console.log(data);
+
     const product = await this.database.product.create({ data });
 
     return product;
