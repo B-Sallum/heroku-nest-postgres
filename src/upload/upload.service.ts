@@ -10,9 +10,7 @@ export class UploadService {
     async readFile(file: Express.Multer.File,
         user: User,){
         const wb = XLSX.read(file.buffer, {type: 'buffer'});
-        console.log(wb)
         const sheet = wb.SheetNames[0];
-        console.log(sheet)
         const excelRows: editPrecoDto[] = XLSX.utils.sheet_to_json(wb.Sheets[sheet])
     }
 }
