@@ -24,6 +24,7 @@ export class UserController {
   @ApiOperation({
     summary: 'Cadastrar um usuário',
   })
+  @ApiBearerAuth()
   create(@Body() data: CreateUserDto): Promise<User> {
     return this.service.create(data);
   }
