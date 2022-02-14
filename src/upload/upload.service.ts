@@ -12,9 +12,6 @@ export class UploadService {
     const excelRows: editPrecoDto[] = XLSX.utils.sheet_to_json(
       wb.Sheets[sheet],
     );
+    console.log(excelRows)
   }
-
-@Injectable()
-export class UploadService {
-  async readFile(file) {}
 }

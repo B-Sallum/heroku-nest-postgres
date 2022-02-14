@@ -18,9 +18,6 @@ import {
 import AuthUser from 'src/auth/auth-user.decorator';
 import { User } from '@prisma/client';
 import { UploadService } from './upload.service';
-import xlsx from 'node-xlsx';
-import XLSX from 'xlsx';
-import fs from 'fs';
 
 class ExcelUploadDto {
   @ApiProperty({ type: 'string', format: 'binary' })
