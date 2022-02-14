@@ -13,4 +13,8 @@ export class UploadService {
       wb.Sheets[sheet],
     );
   }
+
+@Injectable()
+export class UploadService {
+  async readFile(file) {}
 }

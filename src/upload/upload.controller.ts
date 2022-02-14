@@ -31,7 +31,6 @@ class ExcelUploadDto {
 @Controller('upload')
 export class UploadController {
   constructor(private service: UploadService) {}
-
   @UseGuards(AuthGuard())
   @Post('sendfile')
   @UseInterceptors(FileInterceptor('file'))

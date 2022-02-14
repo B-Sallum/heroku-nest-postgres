@@ -19,10 +19,8 @@ export class CredentialsDto {
 export class AuthResponse {
   @IsString()
   @IsNotEmpty()
-  @ApiProperty()
   token: string;
 
   @IsNotEmpty()
-  @ApiProperty()
   user: User;
 }

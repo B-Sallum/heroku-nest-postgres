@@ -5,7 +5,12 @@ import { PassportModule } from '@nestjs/passport';
 import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
-  imports: [PassportModule.register({ defaultStrategy: 'jwt' })],
+  imports: [
+    PassportModule.register({ defaultStrategy: 'jwt' }),
+    MulterModule.register({
+      dest: './uploads',
+    }),
+  ],
   controllers: [UploadController],
   providers: [UploadService],
 })
