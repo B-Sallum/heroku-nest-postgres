@@ -13,14 +13,18 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { Role } from 'src/auth/enums/role.enum';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
 
 @ApiTags('Users')
 @Controller('user')
 export class UserController {
   constructor(private readonly service: UserService) {}
-
-  @UseGuards(AuthGuard())
-  @Post()
+  
+  @Roles(Role.ADMIN)
+  @UseGuards(AuthGuard(), RolesGuard)
+  @Post('/create')
   @ApiOperation({
     summary: 'Cadastrar um usuário',
   })

@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -15,7 +12,7 @@ model User {
   name      String
   email     String   @unique
   pass      String
-  admin     Boolean
+  role      String
   active    Boolean
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

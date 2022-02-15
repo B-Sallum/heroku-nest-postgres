@@ -1,5 +1,6 @@
 import { IsAlpha, IsEmail, IsNotEmpty, Length } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { Role } from 'src/auth/enums/role.enum';
 
 export class CreateUserDto {
   @IsAlpha()
@@ -17,9 +18,9 @@ export class CreateUserDto {
   @ApiProperty()
   email: string;
 
-  // @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
-  //   message: 'Senha pouco segura',
-  // })
+  @ApiProperty()
+  role: Role
+
   @Length(6, 20, { message: 'A senha deve conter de 6 a 20 dígitos' })
   @ApiProperty()
   pass: string;

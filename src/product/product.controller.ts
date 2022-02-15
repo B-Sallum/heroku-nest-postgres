@@ -13,7 +13,7 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { Product, User } from '@prisma/client';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import AuthUser from 'src/auth/auth-user.decorator';
+import AuthUser from 'src/auth/decorators/auth-user.decorator';
 
 @ApiTags('Products')
 @Controller('products')
