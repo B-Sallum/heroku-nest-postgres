@@ -54,7 +54,7 @@ export class UserController {
     return this.service.findOne(+id);
   }
 
-  @Roles(Role.ADMIN)
+  @Roles(Role.ADMIN, Role.USER)
   @UseGuards(AuthGuard(), RolesGuard)
   @Patch('/update/:id')
   @ApiOperation({
