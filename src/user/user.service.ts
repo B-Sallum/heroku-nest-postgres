@@ -36,12 +36,10 @@ export class UserService {
       data: {
         ...data,
         pass: hashPass,
-        admin: false,
         active: true,
       },
     });
 
-    delete user.admin;
     delete user.active;
     delete user.pass;
     return user;

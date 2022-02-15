@@ -15,7 +15,7 @@ import {
   ApiProperty,
   ApiBody,
 } from '@nestjs/swagger';
-import AuthUser from 'src/auth/auth-user.decorator';
+import AuthUser from 'src/auth/decorators/auth-user.decorator';
 import { User } from '@prisma/client';
 import { UploadService } from './upload.service';
 

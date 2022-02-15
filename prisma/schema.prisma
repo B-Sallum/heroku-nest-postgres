@@ -12,7 +12,7 @@ model User {
   name      String
   email     String   @unique
   pass      String
-  admin     Boolean
+  role      String
   active    Boolean
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
