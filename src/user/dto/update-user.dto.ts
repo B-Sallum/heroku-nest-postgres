@@ -14,12 +14,18 @@ export class UpdateUserDto {
   @ApiProperty()
   name: string;
 
-  @IsOptional()d
+  @IsOptional()
+  // @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
+  //   message: 'Senha pouco segura',
+  // })
   @Length(8, 20, { message: 'A senha deve conter de 8 a 20 dígitos' })
   @ApiProperty()
   password: string;
 
   @IsOptional()
+  // @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
+  //   message: 'Senha pouco segura',
+  // })
   @Length(8, 20, {
     message: 'A confirmação da senha deve conter de 8 a 20 dígitos',
   })

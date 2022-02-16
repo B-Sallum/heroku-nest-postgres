@@ -4,7 +4,6 @@ import {
   UploadedFile,
   UseGuards,
   UseInterceptors,
-  Param
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -43,9 +42,8 @@ export class UploadController {
   async uploadFile(
     @UploadedFile() file: Express.Multer.File,
     @AuthUser() user: User,
-    @Param('code') code: string,
   ) {
-    return this.service.readFile(file, user, code);
+    return this.service.readFile(file, user);
   }
 }
 
