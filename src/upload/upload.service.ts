@@ -18,7 +18,7 @@ export class UploadService {
     );
     const updateTable = excelRows.forEach(async(excelArray) => {
       const table = await this.db.product.update({
-        where: excelArray.code,
+        where: { code: excelArray.code },
         data: excelArray
       })
       return table
