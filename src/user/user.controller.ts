@@ -33,9 +33,8 @@ export class UserController {
     return this.service.create(data);
   }
 
-  @Roles(Role.ADMIN, Role.USER)
-  @UseGuards(AuthGuard(), RolesGuard)
-  @Get('/findall')
+  @UseGuards(AuthGuard())
+  @Get()
   @ApiOperation({
     summary: 'Buscar todos os usuários',
   })
@@ -45,7 +44,7 @@ export class UserController {
   }
 
   @UseGuards(AuthGuard())
-  @Get('findId/:id')
+  @Get(':id')
   @ApiOperation({
     summary: 'Retornar um usuário com os logs',
   })
@@ -54,9 +53,8 @@ export class UserController {
     return this.service.findOne(+id);
   }
 
-  @Roles(Role.ADMIN, Role.USER)
-  @UseGuards(AuthGuard(), RolesGuard)
-  @Patch('/update/:id')
+  @UseGuards(AuthGuard())
+  @Patch(':id')
   @ApiOperation({
     summary: 'Editar um usuário',
   })

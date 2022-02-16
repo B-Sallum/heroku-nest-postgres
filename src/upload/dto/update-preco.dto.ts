@@ -1,44 +1,24 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsOptional, IsNumber } from 'class-validator';
+import { IsString, IsNotEmpty } from 'class-validator';
 
-export class updateTableDto {
-  @IsOptional()
+export class editPrecoDto {
   @IsString()
+  @IsNotEmpty()
   @ApiProperty()
-  code: string;
+  PRODUTO: string;
 
-  @IsOptional()
   @IsString()
+  @IsNotEmpty()
   @ApiProperty()
-  name: string;
+  CODIGO_TAB_PRECO: string;
 
-  @IsOptional()
   @IsString()
+  @IsNotEmpty()
   @ApiProperty()
-  description: string;
+  ID_CAMPO_ALTERADO: string;
 
-  @IsOptional()
   @IsString()
+  @IsNotEmpty()
   @ApiProperty()
-  collection: string;
-
-  @IsOptional()
-  @IsString()
-  @ApiProperty()
-  griffe: string;
-
-  @IsNumber()
-  @IsOptional()
-  @ApiProperty()
-  price: number;
-
-  @IsNumber()
-  @IsOptional()
-  @ApiProperty()
-  discount: number;
-
-  @IsNumber()
-  @IsOptional()
-  @ApiProperty()
-  finalPrice: number;
+  VALOR_NOVO: string;
 }
