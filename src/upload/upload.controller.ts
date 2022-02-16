@@ -4,7 +4,7 @@ import {
   UploadedFile,
   UseGuards,
   UseInterceptors,
-  Param
+  Param,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { FileInterceptor } from '@nestjs/platform-express';
