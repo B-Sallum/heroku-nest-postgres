@@ -48,7 +48,7 @@ export class UploadController {
   async uploadFile(
     @UploadedFile() file: Express.Multer.File,
     @AuthUser() user: User,
-  ) {
+  ): Promise<{ message: string }> {
     return this.service.readFile(file, user);
   }
 

@@ -9,7 +9,10 @@ import { StreamableFile } from '@nestjs/common';
 export class UploadService {
   constructor(private db: PrismaService) {}
 
-  async readFile(file: Express.Multer.File, user: User) {
+  async readFile(
+    file: Express.Multer.File,
+    user: User,
+  ): Promise<{ message: string }> {
     const wb = XLSX.read(file.buffer, { type: 'buffer' });
     const sheet = wb.SheetNames[0];
     const excelRows: updateTableDto[] = XLSX.utils.sheet_to_json(
@@ -24,6 +27,7 @@ export class UploadService {
       });
       console.log(table, user);
     });
+    return { message: 'Tabela inserida com sucesso' };
   }
 
   async downloadTable() {
