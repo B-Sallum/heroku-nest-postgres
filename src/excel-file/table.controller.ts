@@ -19,22 +19,26 @@ import {
 import AuthUser from 'src/auth/decorators/auth-user.decorator';
 import { ModLog, User } from '@prisma/client';
 import { UploadService } from './table.service';
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { Role } from 'src/auth/enums/role.enum';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
 
 class ExcelUploadDto {
   @ApiProperty({ type: 'string', format: 'binary' })
   file: any;
 }
 
-@ApiTags('upload')
-@Controller('upload')
+@ApiTags('Files')
+@Controller('files')
 export class UploadController {
   constructor(private service: UploadService) {}
-  
-  @UseGuards(AuthGuard())
-  @Post('/sendfile')
+
+  @Roles(Role.ADMIN, Role.USER)
+  @UseGuards(AuthGuard(), RolesGuard)
+  @Post('/upload')
   @UseInterceptors(FileInterceptor('file'))
   @ApiOperation({
-    summary: 'Recebe uma planilha excel e faz modificações ',
+    summary: 'Recebe uma planilha excel e faz modificações',
   })
   @ApiBearerAuth()
   @ApiConsumes('multipart/form-data')
@@ -47,10 +51,12 @@ export class UploadController {
   ) {
     return this.service.readFile(file, user);
   }
-  
+
+  @Roles(Role.ADMIN)
+  @UseGuards(AuthGuard(), RolesGuard)
   @Get('/download')
-  async downloadFile(){
-    return this.service.downloadTable()
+  async downloadFile() {
+    return this.service.downloadTable();
   }
 }
 

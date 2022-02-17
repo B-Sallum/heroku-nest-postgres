@@ -21,7 +21,7 @@ import { RolesGuard } from 'src/auth/guards/roles.guard';
 @Controller('user')
 export class UserController {
   constructor(private readonly service: UserService) {}
-  
+
   @Roles(Role.ADMIN)
   @UseGuards(AuthGuard(), RolesGuard)
   @Post('/create')
@@ -33,7 +33,7 @@ export class UserController {
     return this.service.create(data);
   }
 
-  @Roles(Role.ADMIN, Role.USER)
+  @Roles(Role.ADMIN)
   @UseGuards(AuthGuard(), RolesGuard)
   @Get('/findall')
   @ApiOperation({
@@ -44,7 +44,8 @@ export class UserController {
     return this.service.findAll();
   }
 
-  @UseGuards(AuthGuard())
+  @Roles(Role.ADMIN)
+  @UseGuards(AuthGuard(), RolesGuard)
   @Get('findId/:id')
   @ApiOperation({
     summary: 'Retornar um usuário com os logs',
