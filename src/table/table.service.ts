@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Res } from '@nestjs/common';
 import * as XLSX from 'xlsx';
 import { User } from '@prisma/client';
 import { updateTableDto } from './dto/update-preco.dto';
 import { PrismaService } from 'src/prisma.service';
+import { StreamableFile } from '@nestjs/common';
 
 @Injectable()
 export class UploadService {
@@ -22,5 +23,21 @@ export class UploadService {
       });
       console.log(table, user);
     });
+  }
+
+ async downloadTable(){
+    const logs =  await this.db.modLog.findMany();
+    const logsToArray = logs.map(({...rest}) => rest)
+  //fazendo o json virar um excel 
+  const workbook = XLSX.utils.book_new();
+  const worksheet = XLSX.utils.json_to_sheet(logsToArray);
+  XLSX.utils.book_append_sheet(workbook,worksheet)
+  const arquivoFinal = XLSX.write(workbook, {
+    bookType:'xls',
+    type:'buffer'
+  });
+    console.log(arquivoFinal)
+    return new StreamableFile(arquivoFinal)
+    
   }
 }
