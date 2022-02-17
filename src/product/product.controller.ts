@@ -14,13 +14,17 @@ import { Product, User } from '@prisma/client';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import AuthUser from 'src/auth/decorators/auth-user.decorator';
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { Role } from 'src/auth/enums/role.enum';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
 
 @ApiTags('Products')
 @Controller('products')
 export class ProductController {
   constructor(private readonly service: ProductService) {}
 
-  @UseGuards(AuthGuard())
+  @Roles(Role.ADMIN, Role.USER)
+  @UseGuards(AuthGuard(), RolesGuard)
   @Post()
   @ApiOperation({
     summary: 'Cadastrar um produto',
@@ -30,7 +34,8 @@ export class ProductController {
     return this.service.create(data);
   }
 
-  @UseGuards(AuthGuard())
+  @Roles(Role.ADMIN, Role.USER)
+  @UseGuards(AuthGuard(), RolesGuard)
   @Get()
   @ApiOperation({
     summary: 'Buscar todos os produtos cadastrados',
@@ -40,7 +45,8 @@ export class ProductController {
     return this.service.findAll();
   }
 
-  @UseGuards(AuthGuard())
+  @Roles(Role.ADMIN, Role.USER)
+  @UseGuards(AuthGuard(), RolesGuard)
   @Get('/:code')
   @ApiOperation({
     summary: 'Buscar um produto por código',
@@ -50,7 +56,8 @@ export class ProductController {
     return this.service.findOne(code);
   }
 
-  @UseGuards(AuthGuard())
+  @Roles(Role.ADMIN, Role.USER)
+  @UseGuards(AuthGuard(), RolesGuard)
   @Patch('/:code')
   @ApiOperation({
     summary: 'Atualizar um produto',
