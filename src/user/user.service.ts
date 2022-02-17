@@ -53,6 +53,12 @@ export class UserService {
     return users;
   }
 
+  async findAllLogs(): Promise<any[]> {
+    const allLogs = await this.database.modLog.findMany();
+
+    return allLogs;
+  }
+
   async findOne(id: number): Promise<any> {
     const user = await this.database.user.findUnique({
       where: { id },

@@ -46,6 +46,17 @@ export class UserController {
 
   @Roles(Role.ADMIN)
   @UseGuards(AuthGuard(), RolesGuard)
+  @Get('/logs')
+  @ApiOperation({
+    summary: 'Buscar os logs por período',
+  })
+  @ApiBearerAuth()
+  findAllLogs(): Promise<User[]> {
+    return this.service.findAllLogs();
+  }
+
+  @Roles(Role.ADMIN)
+  @UseGuards(AuthGuard(), RolesGuard)
   @Get(':id')
   @ApiOperation({
     summary: 'Retornar um usuário com os logs',

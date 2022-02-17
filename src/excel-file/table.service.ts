@@ -1,4 +1,4 @@
-import { Injectable, Res } from '@nestjs/common';
+import { BadRequestException, Injectable, Res } from '@nestjs/common';
 import * as XLSX from 'xlsx';
 import { User } from '@prisma/client';
 import { updateTableDto } from './dto/update-table.dto';
@@ -8,6 +8,23 @@ import { StreamableFile } from '@nestjs/common';
 @Injectable()
 export class UploadService {
   constructor(private db: PrismaService) {}
+
+  async updateProduct(
+    code: string,
+    newDiscount: number,
+    newPrice: number,
+    newFinalPrice: number,
+  ) {
+    console.log('Aplicando update do produto no banco');
+    await this.db.product.update({
+      where: { code },
+      data: {
+        discount: newDiscount,
+        finalPrice: newFinalPrice,
+        price: newPrice,
+      },
+    });
+  }
 
   async readFile(
     file: Express.Multer.File,
@@ -19,13 +36,42 @@ export class UploadService {
       wb.Sheets[sheet],
     );
     excelRows.forEach(async (product) => {
-      const table = await this.db.product.update({
-        where: { code: product.code },
-        data: {
-          discount: product.discount,
-        },
-      });
-      console.log(table, user);
+      if (!product.discount) {
+        throw new BadRequestException('Produto sem informações de desconto');
+      }
+
+      const newDiscount = product.discount;
+      let newPrice = null;
+      let newFinalPrice = null;
+
+      console.log('Produto sendo lido');
+
+      if (!product.price) {
+        console.log('Produto sem preço, puxando valor do banco');
+        await this.db.product
+          .findUnique({
+            where: { code: product.code },
+          })
+          .then((res) => {
+            newPrice = res.price;
+          })
+          .then(() => {
+            newFinalPrice = (newPrice / 100) * (100 - newDiscount);
+          })
+          .then(() => {
+            this.updateProduct(
+              product.code,
+              newDiscount,
+              newPrice,
+              newFinalPrice,
+            );
+          });
+      } else {
+        console.log('Produto com novo preço');
+        newPrice = product.price;
+        newFinalPrice = (newPrice / 100) * (100 - newDiscount);
+        this.updateProduct(product.code, newDiscount, newPrice, newFinalPrice);
+      }
     });
     return { message: 'Tabela inserida com sucesso' };
   }
