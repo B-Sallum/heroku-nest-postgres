@@ -17,7 +17,7 @@ import {
 } from '@nestjs/swagger';
 import AuthUser from 'src/auth/decorators/auth-user.decorator';
 import { User } from '@prisma/client';
-import { UploadService } from './upload.service';
+import { UploadService } from './table.service';
 
 class ExcelUploadDto {
   @ApiProperty({ type: 'string', format: 'binary' })
