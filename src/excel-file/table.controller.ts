@@ -28,8 +28,8 @@ class ExcelUploadDto {
   file: any;
 }
 
-@ApiTags('Files')
-@Controller('files')
+@ApiTags('File')
+@Controller('file')
 export class UploadController {
   constructor(private service: UploadService) {}
 

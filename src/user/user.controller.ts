@@ -18,13 +18,13 @@ import { Role } from 'src/auth/enums/role.enum';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 
 @ApiTags('Users')
-@Controller('user')
+@Controller('users')
 export class UserController {
   constructor(private readonly service: UserService) {}
 
   @Roles(Role.ADMIN)
   @UseGuards(AuthGuard(), RolesGuard)
-  @Post('/create')
+  @Post('/')
   @ApiOperation({
     summary: 'Cadastrar um usuário',
   })
@@ -35,7 +35,7 @@ export class UserController {
 
   @Roles(Role.ADMIN)
   @UseGuards(AuthGuard(), RolesGuard)
-  @Get('/findall')
+  @Get('/')
   @ApiOperation({
     summary: 'Buscar todos os usuários',
   })
@@ -46,7 +46,7 @@ export class UserController {
 
   @Roles(Role.ADMIN)
   @UseGuards(AuthGuard(), RolesGuard)
-  @Get('findId/:id')
+  @Get(':id')
   @ApiOperation({
     summary: 'Retornar um usuário com os logs',
   })
@@ -57,7 +57,7 @@ export class UserController {
 
   @Roles(Role.ADMIN, Role.USER)
   @UseGuards(AuthGuard(), RolesGuard)
-  @Patch('/update/:id')
+  @Patch(':id')
   @ApiOperation({
     summary: 'Editar um usuário',
   })
