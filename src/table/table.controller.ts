@@ -29,6 +29,7 @@ class ExcelUploadDto {
 @Controller('upload')
 export class UploadController {
   constructor(private service: UploadService) {}
+  
   @UseGuards(AuthGuard())
   @Post('/sendfile')
   @UseInterceptors(FileInterceptor('file'))
@@ -46,7 +47,7 @@ export class UploadController {
   ) {
     return this.service.readFile(file, user);
   }
-
+  
   @Get('/download')
   async downloadFile(){
     return this.service.downloadTable()

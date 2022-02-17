@@ -8,6 +8,7 @@ import { StreamableFile } from '@nestjs/common';
 @Injectable()
 export class UploadService {
   constructor(private db: PrismaService) {}
+  
   async readFile(file: Express.Multer.File, user: User) {
     const wb = XLSX.read(file.buffer, { type: 'buffer' });
     const sheet = wb.SheetNames[0];
