@@ -10,6 +10,7 @@ export class UploadService {
   constructor(private db: PrismaService) {}
 
   async updateProduct(
+    id: number,
     code: string,
     newDiscount: number,
     newPrice: number,
@@ -44,7 +45,7 @@ export class UploadService {
       let newPrice = null;
       let newFinalPrice = null;
 
-      console.log('Produto sendo lido');
+      console.log('Linha do produto sendo lida');
 
       if (!product.price) {
         console.log('Produto sem preço, puxando valor do banco');
@@ -60,6 +61,7 @@ export class UploadService {
           })
           .then(() => {
             this.updateProduct(
+              user.id,
               product.code,
               newDiscount,
               newPrice,
@@ -67,10 +69,16 @@ export class UploadService {
             );
           });
       } else {
-        console.log('Produto com novo preço');
+        console.log('Linha de produto com novo preço');
         newPrice = product.price;
         newFinalPrice = (newPrice / 100) * (100 - newDiscount);
-        this.updateProduct(product.code, newDiscount, newPrice, newFinalPrice);
+        this.updateProduct(
+          user.id,
+          product.code,
+          newDiscount,
+          newPrice,
+          newFinalPrice,
+        );
       }
     });
     return { message: 'Tabela inserida com sucesso' };

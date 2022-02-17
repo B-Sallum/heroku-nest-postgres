@@ -10,7 +10,7 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('Gerenciador Restoque')
-    .setDescription('Api que simula um gerenciador de E-commerce')
+    .setDescription('API do Gerenciador de Descontos')
     .setVersion('1.0')
     .addTag('Restoque')
     .addBearerAuth()

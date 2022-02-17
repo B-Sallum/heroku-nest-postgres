@@ -55,6 +55,10 @@ export class UploadController {
   @Roles(Role.ADMIN)
   @UseGuards(AuthGuard(), RolesGuard)
   @Get('/download')
+  @ApiOperation({
+    summary: 'Recebe uma planilha excel e faz modificações',
+  })
+  @ApiBearerAuth()
   async downloadFile() {
     return this.service.downloadTable();
   }
