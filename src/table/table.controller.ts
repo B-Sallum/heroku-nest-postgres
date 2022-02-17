@@ -1,5 +1,6 @@
 import {
   Controller,
+  Get,
   Post,
   UploadedFile,
   UseGuards,
@@ -16,7 +17,7 @@ import {
   ApiBody,
 } from '@nestjs/swagger';
 import AuthUser from 'src/auth/decorators/auth-user.decorator';
-import { User } from '@prisma/client';
+import { ModLog, User } from '@prisma/client';
 import { UploadService } from './table.service';
 
 class ExcelUploadDto {
@@ -28,8 +29,9 @@ class ExcelUploadDto {
 @Controller('upload')
 export class UploadController {
   constructor(private service: UploadService) {}
+  
   @UseGuards(AuthGuard())
-  @Post('sendfile')
+  @Post('/sendfile')
   @UseInterceptors(FileInterceptor('file'))
   @ApiOperation({
     summary: 'Recebe uma planilha excel e faz modificações ',
@@ -44,6 +46,11 @@ export class UploadController {
     @AuthUser() user: User,
   ) {
     return this.service.readFile(file, user);
+  }
+  
+  @Get('/download')
+  async downloadFile(){
+    return this.service.downloadTable()
   }
 }
 
