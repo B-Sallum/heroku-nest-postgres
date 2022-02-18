@@ -61,9 +61,12 @@ export class UploadController {
     summary: 'Recebe uma planilha excel e faz modificações',
   })
   // @ApiBearerAuth()
-  async downloadFile(@Response({passthrough: true}) res):Promise<StreamableFile> {
+  async downloadFile(
+    @Response({ passthrough: true }) res,
+  ): Promise<StreamableFile> {
     res.set({
-      'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'Content-Type':
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
       'Content-Disposition': 'attachment; filename="logTable.xlsx"',
     });
     return this.service.downloadTable();

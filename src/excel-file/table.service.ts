@@ -1,6 +1,6 @@
-import { BadRequestException, Injectable, Res } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import * as XLSX from 'xlsx';
-import { Product, User } from '@prisma/client';
+import { User } from '@prisma/client';
 import { updateTableDto } from './dto/update-table.dto';
 import { PrismaService } from 'src/prisma.service';
 import { StreamableFile } from '@nestjs/common';
