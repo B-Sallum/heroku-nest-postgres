@@ -2,7 +2,9 @@ import {
   Controller,
   Get,
   Post,
+  StreamableFile,
   UploadedFile,
+  Response,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
@@ -17,7 +19,7 @@ import {
   ApiBody,
 } from '@nestjs/swagger';
 import AuthUser from 'src/auth/decorators/auth-user.decorator';
-import { ModLog, User } from '@prisma/client';
+import { ModLog, Product, User } from '@prisma/client';
 import { UploadService } from './table.service';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from 'src/auth/enums/role.enum';
@@ -48,18 +50,22 @@ export class UploadController {
   async uploadFile(
     @UploadedFile() file: Express.Multer.File,
     @AuthUser() user: User,
-  ): Promise<{ message: string }> {
-    return this.service.readFile(file, user);
+  ) {
+    return await this.service.readFile(file, user);
   }
 
-  @Roles(Role.ADMIN)
-  @UseGuards(AuthGuard(), RolesGuard)
+  // @Roles(Role.ADMIN)
+  // @UseGuards(AuthGuard(), RolesGuard)
   @Get('/download')
   @ApiOperation({
     summary: 'Recebe uma planilha excel e faz modificações',
   })
-  @ApiBearerAuth()
-  async downloadFile() {
+  // @ApiBearerAuth()
+  async downloadFile(@Response({passthrough: true}) res):Promise<StreamableFile> {
+    res.set({
+      'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'Content-Disposition': 'attachment; filename="logTable.xlsx"',
+    });
     return this.service.downloadTable();
   }
 }
