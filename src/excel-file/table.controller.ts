@@ -54,13 +54,13 @@ export class UploadController {
     return await this.service.readFile(file, user);
   }
 
-  // @Roles(Role.ADMIN)
-  // @UseGuards(AuthGuard(), RolesGuard)
+  @Roles(Role.ADMIN)
+  @UseGuards(AuthGuard(), RolesGuard)
   @Get('/download')
   @ApiOperation({
     summary: 'Recebe uma planilha excel e faz modificações',
   })
-  // @ApiBearerAuth()
+  @ApiBearerAuth()
   async downloadFile(
     @Response({ passthrough: true }) res,
   ): Promise<StreamableFile> {
@@ -72,7 +72,3 @@ export class UploadController {
     return this.service.downloadTable();
   }
 }
-
-//Receber a planilha e salvar em uma pasta
-//Ler a Planilha e verificar se esta de acordo com os dados
-// Separar em um array e salvar no banco fazendo o update many

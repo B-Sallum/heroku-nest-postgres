@@ -1,4 +1,3 @@
-import { jwtConstants } from './guards/jwt.constants';
 import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
@@ -12,7 +11,7 @@ import { RolesGuard } from './guards/roles.guard';
   imports: [
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
-      secret: jwtConstants.secret,
+      secret: process.env.SECRET,
       signOptions: {
         expiresIn: '20d',
       },
