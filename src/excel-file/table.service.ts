@@ -27,17 +27,14 @@ export class UploadService {
     });
   }
 
-  async readFile(
-    file: Express.Multer.File,
-    user: User,
-  ){
+  async readFile(file: Express.Multer.File, user: User) {
     const wb = XLSX.read(file.buffer, { type: 'buffer' });
     const sheet = wb.SheetNames[0];
     const excelRows: updateTableDto[] = XLSX.utils.sheet_to_json(
       wb.Sheets[sheet],
     );
 
-   const orderPromise = excelRows.map(async (product) => {
+    const orderPromise = excelRows.map(async (product) => {
       if (!product.discount) {
         throw new BadRequestException('Produto sem informações de desconto');
       }
@@ -83,10 +80,10 @@ export class UploadService {
       }
     });
     const message = Promise.all(orderPromise).then(() => {
-      console.log(orderPromise)
-      return {message:'Tabela atualizada'}
-    })
-    return await message
+      console.log(orderPromise);
+      return { message: 'Tabela atualizada' };
+    });
+    return await message;
   }
 
   async downloadTable() {

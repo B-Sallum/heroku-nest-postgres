@@ -55,7 +55,18 @@ export class ProductService {
 
     const product = await this.database.product.update({
       where: { code },
-      data: data,
+      data: {
+        code: data.code,
+        name: data.name,
+        description: data.description,
+        collection: data.collection,
+        griffe: data.griffe,
+        stock: data.stock,
+        active: data.active,
+        price: data.price,
+        discount: data.discount,
+        finalPrice: data.finalPrice,
+      },
     });
 
     if (oldProduct.price !== product.price) {
