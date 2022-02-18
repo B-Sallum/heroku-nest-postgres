@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable, Res } from '@nestjs/common';
 import * as XLSX from 'xlsx';
-import { User } from '@prisma/client';
+import { Product, User } from '@prisma/client';
 import { updateTableDto } from './dto/update-table.dto';
 import { PrismaService } from 'src/prisma.service';
 import { StreamableFile } from '@nestjs/common';
@@ -30,13 +30,14 @@ export class UploadService {
   async readFile(
     file: Express.Multer.File,
     user: User,
-  ): Promise<{ message: string }> {
+  ){
     const wb = XLSX.read(file.buffer, { type: 'buffer' });
     const sheet = wb.SheetNames[0];
     const excelRows: updateTableDto[] = XLSX.utils.sheet_to_json(
       wb.Sheets[sheet],
     );
-    excelRows.forEach(async (product) => {
+
+   const orderPromise = excelRows.map(async (product) => {
       if (!product.discount) {
         throw new BadRequestException('Produto sem informações de desconto');
       }
@@ -81,7 +82,11 @@ export class UploadService {
         );
       }
     });
-    return { message: 'Tabela inserida com sucesso' };
+    const message = Promise.all(orderPromise).then(() => {
+      console.log(orderPromise)
+      return {message:'Tabela atualizada'}
+    })
+    return await message
   }
 
   async downloadTable() {
@@ -92,10 +97,9 @@ export class UploadService {
     const worksheet = XLSX.utils.json_to_sheet(logsToArray);
     XLSX.utils.book_append_sheet(workbook, worksheet);
     const arquivoFinal = XLSX.write(workbook, {
-      bookType: 'xls',
+      bookType: 'xlsx',
       type: 'buffer',
     });
-    console.log(arquivoFinal);
     return new StreamableFile(arquivoFinal);
   }
 }
