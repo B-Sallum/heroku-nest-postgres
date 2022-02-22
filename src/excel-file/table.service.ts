@@ -1,6 +1,7 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { UpdateProductDto } from './../product/dto/update-product.dto';
+import { Injectable } from '@nestjs/common';
 import * as XLSX from 'xlsx';
-import { User } from '@prisma/client';
+import { Product, User } from '@prisma/client';
 import { updateTableDto } from './dto/update-table.dto';
 import { PrismaService } from 'src/prisma.service';
 import { StreamableFile } from '@nestjs/common';
@@ -9,20 +10,25 @@ import { StreamableFile } from '@nestjs/common';
 export class UploadService {
   constructor(private db: PrismaService) {}
 
-  async updateProduct(
-    id: number,
-    code: string,
-    newDiscount: number,
-    newPrice: number,
-    newFinalPrice: number,
-  ) {
-    console.log('Aplicando update do produto no banco');
+  async getProduct(code: string) {
+    console.log('11 GET');
+    await this.db.product
+      .findUnique({
+        where: { code },
+      })
+      .then((res: Product) => {
+        return res.price;
+      });
+  }
+
+  async updateProduct(product: UpdateProductDto) {
+    console.log('2222 UPDATE');
     await this.db.product.update({
-      where: { code },
+      where: { code: product.code },
       data: {
-        discount: newDiscount,
-        finalPrice: newFinalPrice,
-        price: newPrice,
+        discount: product.discount,
+        finalPrice: product.finalPrice,
+        price: product.price,
       },
     });
   }
@@ -34,56 +40,24 @@ export class UploadService {
       wb.Sheets[sheet],
     );
 
-    const orderPromise = excelRows.map(async (product) => {
-      if (!product.discount) {
-        throw new BadRequestException('Produto sem informações de desconto');
-      }
-
+    excelRows.map(async (product) => {
       const newDiscount = product.discount;
-      let newPrice = null;
-      let newFinalPrice = null;
+      const newPrice = null;
+      const newFinalPrice = null;
 
-      console.log('Linha do produto sendo lida');
-
-      if (!product.price) {
-        console.log('Produto sem preço, puxando valor do banco');
-        await this.db.product
-          .findUnique({
-            where: { code: product.code },
-          })
-          .then((res) => {
-            newPrice = res.price;
-          })
-          .then(() => {
-            newFinalPrice = (newPrice / 100) * (100 - newDiscount);
-          })
-          .then(() => {
-            this.updateProduct(
-              user.id,
-              product.code,
-              newDiscount,
-              newPrice,
-              newFinalPrice,
-            );
-          });
-      } else {
-        console.log('Linha de produto com novo preço');
-        newPrice = product.price;
-        newFinalPrice = (newPrice / 100) * (100 - newDiscount);
-        this.updateProduct(
-          user.id,
-          product.code,
-          newDiscount,
-          newPrice,
-          newFinalPrice,
-        );
-      }
+      const logModifications = async () => {
+        console.log('33333333 LOG');
+        await this.db.modLog.create({
+          data: {
+            user_id: user.id,
+            product_id: product.code,
+            alter_field: 'Preço final',
+            original: newPrice,
+            new: newFinalPrice,
+          },
+        });
+      };
     });
-    const message = Promise.all(orderPromise).then(() => {
-      console.log(orderPromise);
-      return { message: 'Tabela atualizada' };
-    });
-    return await message;
   }
 
   async downloadTable() {
