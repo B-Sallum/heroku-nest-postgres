@@ -57,7 +57,9 @@ export class UploadService {
       wb.Sheets[sheet],
     );
 
-    const updateAll = excelRows.map(async (product) => {
+    // const updateAll = excelRows.map(async (product) => {
+
+    for await (const product of excelRows) {
       const code = product.code;
       const discount = product.discount;
       let finalPrice = null;
@@ -77,16 +79,12 @@ export class UploadService {
         price,
       });
 
-      const message = await this.logModifications(user, product);
+      // await this.logModifications(user, product);
+    }
 
-      return message;
-    });
+    // });
 
-    const message = Promise.all(updateAll).then(() => {
-      return { message: 'All update?' };
-    });
-
-    return message;
+    return { message: 'Updated' };
   }
 
   async downloadTable() {

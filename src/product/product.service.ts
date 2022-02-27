@@ -35,6 +35,8 @@ export class ProductService {
   }
 
   async findOne(code: string): Promise<Product> {
+    code.toString();
+
     const product = await this.database.product.findUnique({
       where: { code },
     });
@@ -51,6 +53,8 @@ export class ProductService {
     code: string,
     data: UpdateProductDto,
   ): Promise<Product> {
+    code.toString();
+
     const oldProduct = await this.findOne(code);
 
     const product = await this.database.product.update({
